@@ -52,6 +52,18 @@ scroll-conservatively 1000)
     :init (doom-modeline-mode 1)
     :custom ((doom-modeline-height 15)))
 
+;;----------------------------------[ Ivy Mode ]-------------------------------
+;; Let's the completion and stuff happen in the middle of the screen.
+(use-package swiper)
+(use-package ivy
+    :diminish
+    :bind (("C-s" . swiper))
+    :config
+        (ivy-mode 1))
+
+(use-package ivy-posframe
+    :config
+    (ivy-posframe-mode 1))
 
 
 ;;---------------------------[ Custom Set Variables ]--------------------------
