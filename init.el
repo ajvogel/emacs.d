@@ -14,6 +14,8 @@
 (set-fringe-mode 16)
 (column-number-mode)
 
+(setq scroll-margin 5
+scroll-conservatively 1000)
 
 ;;----------------------[ Setup Package Configuration ]------------------------
 (require 'package)
@@ -28,7 +30,7 @@
 
 
 (require 'use-package)
-; (setq use-package-always-ensure t) ; Has this in the other one, not sure what?
+(setq use-package-always-ensure t) ; Has this in the other one, not sure what?
 
 
 ;;----------------------------[ DooM Themes ]----------------------------------
@@ -45,9 +47,14 @@
 )
 
 
+(use-package doom-modeline
+    :ensure t
+    :init (doom-modeline-mode 1)
+    :custom ((doom-modeline-height 15)))
 
 
 
+;;---------------------------[ Custom Set Variables ]--------------------------
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
