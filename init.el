@@ -127,10 +127,40 @@ scroll-conservatively 1000)
 (use-package company-box
   :hook (company-mode . company-box-mode))
 
-(use-package eglot
+
+;; LSP MODE START
+(use-package lsp-mode
+  :commands (lsp lsp-deferred)
+  :hook (lsp-mode . ajv-lsp-mode-hook)
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :config
+  (lsp-enable-which-key-integration t))
+
+; Seems to work the best so far...
+;; NEED: to do "npm install -g pyright"
+(use-package lsp-pyright
   :ensure t
-  :defer t
-  :hook (python-mode . eglot-ensure))
+  :hook (python-mode . (lambda ()
+			 (require 'lsp-pyright)
+			 (lsp-deferred))))
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :custom
+  (lsp-ui-doc-position 'bottom))
+
+(use-package lsp-ivy
+  :after lsp)
+
+;; LSP mode stop ---
+
+
+
+;; (use-package eglot
+;;   :ensure t
+;;   :defer t
+;;   :hook (python-mode . eglot-ensure))
 
 (use-package pipenv
   :hook (python-mode . pipenv-mode)
@@ -165,6 +195,7 @@ scroll-conservatively 1000)
 	    (setq-default py-split-windows-on-execute-function 'split-window-horizontally)
 	    (rainbow-delimiters-mode)
 	    (python-cell-mode)
+	    (indent-guide-mode)
 	    ))
 
 
@@ -187,7 +218,16 @@ scroll-conservatively 1000)
  '(py-shell-name "ipython3")
  '(python-cell-highlight-cell nil)
  '(tool-bar-mode nil)
- '(warning-suppress-types '((comp) (comp) (comp) (comp) (comp) (comp) (comp) (comp))))
+ '(warning-suppress-types
+   '((use-package)
+     (comp)
+     (comp)
+     (comp)
+     (comp)
+     (comp)
+     (comp)
+     (comp)
+     (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
