@@ -30,7 +30,10 @@ scroll-conservatively 1000)
 
 
 (require 'use-package)
-(setq use-package-always-ensure t) ; Has this in the other one, not sure what?
+
+; This slows down things a lot, only needed when we start from scratch.
+
+;(setq use-package-always-ensure t) ; Has this in the other one, not sure what?
 
 
 ;;----------------------------[ DooM Themes ]----------------------------------
@@ -51,6 +54,21 @@ scroll-conservatively 1000)
     :ensure t
     :init (doom-modeline-mode 1)
     :custom ((doom-modeline-height 15)))
+
+(use-package dashboard
+  :ensure t
+  :config
+  (setq dashboard-center-content t)
+  (setq dashboard-banner-logo-title "WELCOME BACK, COMMANDER")
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-set-file-icons t)
+  (setq dashboard-startup-banner "~/.emacs.d/emacs.png")
+  (setq dashboard-items '((recents  . 5)
+                          (bookmarks . 5)
+                          (projects . 5)
+                          (agenda . 5)))  
+  (dashboard-setup-startup-hook)
+  )
 
 ;;----------------------------------[ Ivy Mode ]-------------------------------
 ;; Let's the completion and stuff happen in the middle of the screen.
@@ -145,7 +163,14 @@ scroll-conservatively 1000)
 	    (setq python-shell-interpreter "ipython" python-shell-interpreter-args "--simple-prompt -i")
 	    (local-set-key (kbd "C-c i") 'run-python) ;; Python Shell
 	    (setq-default py-split-windows-on-execute-function 'split-window-horizontally)
+	    (rainbow-delimiters-mode)
+	    (python-cell-mode)
 	    ))
+
+
+(use-package fira-code-mode
+  :custom (fira-code-mode-disabled-ligatures '("[]" "x"))  ; ligatures you don't want
+  :hook prog-mode) 
 
 ;;---------------------------[ Custom Set Variables ]--------------------------
 (custom-set-variables
@@ -154,12 +179,18 @@ scroll-conservatively 1000)
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(column-number-mode t)
+ '(company-show-quick-access t nil nil "Customized with use-package company")
+ '(cursor-type 'bar)
  '(global-display-line-numbers-mode t)
- '(package-selected-packages '(use-package))
- '(tool-bar-mode nil))
+ '(ispell-dictionary nil)
+ '(package-selected-packages '(fira-code-mode all-the-icons use-package))
+ '(py-shell-name "ipython3")
+ '(python-cell-highlight-cell nil)
+ '(tool-bar-mode nil)
+ '(warning-suppress-types '((comp) (comp) (comp) (comp) (comp) (comp) (comp) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 113 :width normal)))))
+ '(default ((t (:family "Fira Code" :foundry "CTDB" :slant normal :weight normal :height 98 :width normal)))))
