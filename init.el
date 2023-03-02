@@ -98,60 +98,75 @@ scroll-conservatively 1000)
   ;; Remove guess indent python message
   (setq python-indent-guess-indent-offset-verbose nil))
 
-(use-package company
-  :ensure t
-  :defer t
-  :custom
-  ;; Search other buffers with the same modes for completion instead of
-  ;; searching all other buffers.
-  (company-dabbrev-other-buffers t)
-  (company-dabbrev-code-other-buffers t)
-  ;; M-<num> to select an option according to its number.
-  (company-show-numbers t)
-  ;; Only 2 letters required for completion to activate.
-  (company-minimum-prefix-length 3)
-  ;; Do not downcase completions by default.
-  (company-dabbrev-downcase nil)
-  ;; Even if I write something with the wrong case,
-  ;; provide the correct casing.
-  (company-dabbrev-ignore-case t)
-  ;; company completion wait
-  (company-idle-delay 0.2)
-  ;; No company-mode in shell & eshell
-  (company-global-modes '(not eshell-mode shell-mode))
-  ;; Use company with text and programming modes.
-    :hook ((text-mode . company-mode)
-           (prog-mode . company-mode)))
+
+;; LSP-BRIDGE
+
+(add-to-list 'load-path "~/.emacs.d/lsp-bridge/")
+(use-package yasnippet)
+
+(yas-global-mode 1)
+(require 'lsp-bridge)
+(global-lsp-bridge-mode)
+
+(setq lsp-bridge-enable-hover-diagnostic t)
+(setq lsp-bridge-signature-show-function 'lsp-bridge-signature-posframe)
+
+
+
+;; (use-package company
+;;   :ensure t
+;;   :defer t
+;;   :custom
+;;   ;; Search other buffers with the same modes for completion instead of
+;;   ;; searching all other buffers.
+;;   (company-dabbrev-other-buffers t)
+;;   (company-dabbrev-code-other-buffers t)
+;;   ;; M-<num> to select an option according to its number.
+;;   (company-show-numbers t)
+;;   ;; Only 2 letters required for completion to activate.
+;;   (company-minimum-prefix-length 3)
+;;   ;; Do not downcase completions by default.
+;;   (company-dabbrev-downcase nil)
+;;   ;; Even if I write something with the wrong case,
+;;   ;; provide the correct casing.
+;;   (company-dabbrev-ignore-case t)
+;;   ;; company completion wait
+;;   (company-idle-delay 0.2)
+;;   ;; No company-mode in shell & eshell
+;;   (company-global-modes '(not eshell-mode shell-mode))
+;;   ;; Use company with text and programming modes.
+;;     :hook ((text-mode . company-mode)
+;;            (prog-mode . company-mode)))
 
 ;; Supposedly, makes company look a little nicer.
-(use-package company-box
-  :hook (company-mode . company-box-mode))
+;; (use-package company-box
+;;   :hook (company-mode . company-box-mode))
 
 
-;; LSP MODE START
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook (lsp-mode . ajv-lsp-mode-hook)
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :config
-  (lsp-enable-which-key-integration t))
+;; ;; LSP MODE START
+;; (use-package lsp-mode
+;;   :commands (lsp lsp-deferred)
+;;   :hook (lsp-mode . ajv-lsp-mode-hook)
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :config
+;;   (lsp-enable-which-key-integration t))
 
-; Seems to work the best so far...
-;; NEED: to do "npm install -g pyright"
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-			 (require 'lsp-pyright)
-			 (lsp-deferred))))
+;; ; Seems to work the best so far...
+;; ;; NEED: to do "npm install -g pyright"
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;; 			 (require 'lsp-pyright)
+;; 			 (lsp-deferred))))
 
-(use-package lsp-ui
-  :hook (lsp-mode . lsp-ui-mode)
-  :custom
-  (lsp-ui-doc-position 'bottom))
+;; (use-package lsp-ui
+;;   :hook (lsp-mode . lsp-ui-mode)
+;;   :custom
+;;   (lsp-ui-doc-position 'bottom))
 
-(use-package lsp-ivy
-  :after lsp)
+;; (use-package lsp-ivy
+;;   :after lsp)
 
 ;; LSP mode stop ---
 
