@@ -33,7 +33,7 @@
 (global-hl-line-mode +1)
 (set-fringe-mode 16)
 (column-number-mode)
-(global-git-gutter-mode +1)
+;;(global-git-gutter-mode +1)
 (setq-default cursor-type 'bar) 
 (setq scroll-margin 5
 scroll-conservatively 1000)
