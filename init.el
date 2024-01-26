@@ -460,7 +460,7 @@ scroll-conservatively 1000)
 (use-package highlight-indent-guides)
 
 (use-package poetry
-  ensure: t)
+  :ensure t)
 
 (use-package rainbow-delimiters
   :after python-mode
@@ -498,9 +498,11 @@ scroll-conservatively 1000)
 
 
 ;; Enable the www ligature in every possible major mode
-(ligature-set-ligatures 't '("www"))
+;(ligature-set-ligatures 't '("www"))
 
-;; Enable ligatures in programming modes                                                           
+;; Enable ligatures in programming modes
+(use-package ligature)
+
 (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
                                      ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
                                      "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"

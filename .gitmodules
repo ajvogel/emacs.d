@@ -1,0 +1,3 @@
+[submodule "lsp-bridge"]
+	path = lsp-bridge
+	url = https://github.com/ajvogel/lsp-bridge.git
