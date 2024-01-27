@@ -60,6 +60,7 @@ scroll-conservatively 1000)
 
 
 ;;----------------------------[ DooM Themes ]----------------------------------
+
 (use-package doom-themes
     :ensure t
     :config 
@@ -98,6 +99,8 @@ scroll-conservatively 1000)
 (use-package markdown-mode
   :hook
   (markdown-mode . nb/markdown-unhighlight)
+  (markdown-mode . flycheck-mode)
+  (markdown-mode . visual-line-mode)
   :config
   (defvar nb/current-line '(0 . 0)
     "(start . end) of current line in current buffer")
@@ -136,11 +139,17 @@ scroll-conservatively 1000)
   (markdown-header-face-4 ((t (:height 1.15 :foreground "#BF616A" :weight bold :inherit markdown-header-face))))
   (markdown-header-face-5 ((t (:height 1.1  :foreground "#b48ead" :weight bold :inherit markdown-header-face))))
   (markdown-header-face-6 ((t (:height 1.05 :foreground "#5e81ac" :weight semi-bold :inherit markdown-header-face)))))
-(use-package flycheck-inline)
+
+
+(use-package flycheck-posframe
+  :ensure t
+  :after flycheck
+  :config (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
 (use-package flycheck-vale)
 (flycheck-vale-setup)
-(with-eval-after-load 'flycheck
-  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+(setq-default flycheck-indication-mode 'left-margin)
+(add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
 
 ;; (straight-use-package
 ;;  '(flymake-vale :type git :host github :repo "tpeacock19/flymake-vale"))
@@ -368,7 +377,8 @@ scroll-conservatively 1000)
 
 (add-hook 'python-mode-hook
           (lambda ()
-             (define-key python-mode-map "\r" 'newline-and-indent)))
+            (define-key python-mode-map "\r" 'newline-and-indent)
+            (lsp-bridge-mode)))
 
 ;; LSP-BRIDGE
 
@@ -377,7 +387,7 @@ scroll-conservatively 1000)
 
 (yas-global-mode 1)
 (require 'lsp-bridge)
-(global-lsp-bridge-mode)
+;(global-lsp-bridge-mode)
 
 (setq lsp-bridge-enable-hover-diagnostic t)
 (setq lsp-bridge-signature-show-function 'lsp-bridge-signature-posframe)
@@ -501,26 +511,26 @@ scroll-conservatively 1000)
 ;(ligature-set-ligatures 't '("www"))
 
 ;; Enable ligatures in programming modes
-(use-package ligature)
+;; (use-package ligature)
 
-(ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
-                                     ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
-                                     "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
-                                     "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
-                                     "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
-                                     "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
-                                     "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
-                                     "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
-                                     "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
-                                     "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
+;; (ligature-set-ligatures 'prog-mode '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\" "{-" "::"
+;;                                      ":::" ":=" "!!" "!=" "!==" "-}" "----" "-->" "->" "->>"
+;;                                      "-<" "-<<" "-~" "#{" "#[" "##" "###" "####" "#(" "#?" "#_"
+;;                                      "#_(" ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*" "/**"
+;;                                      "/=" "/==" "/>" "//" "///" "&&" "||" "||=" "|=" "|>" "^=" "$>"
+;;                                      "++" "+++" "+>" "=:=" "==" "===" "==>" "=>" "=>>" "<="
+;;                                      "=<<" "=/=" ">-" ">=" ">=>" ">>" ">>-" ">>=" ">>>" "<*"
+;;                                      "<*>" "<|" "<|>" "<$" "<$>" "<!--" "<-" "<--" "<->" "<+"
+;;                                      "<+>" "<=" "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<"
+;;                                      "<~" "<~~" "</" "</>" "~@" "~-" "~>" "~~" "~~>" "%%"))
 
-(global-ligature-mode 't)
+;; (global-ligature-mode 't)
 
 
 
-;; (use-package fira-code-mode
-;;   :custom (fira-code-mode-disabled-ligatures '("[]" "x", "and"))  ; ligatures you don't want
-;;   :hook prog-mode) 
+(use-package fira-code-mode
+  :custom (fira-code-mode-disabled-ligatures '("[]" "x", "and"))  ; ligatures you don't want
+  :hook prog-mode) 
 
 ;;---------------------------[ Custom Set Variables ]--------------------------
 (custom-set-variables
