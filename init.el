@@ -96,11 +96,15 @@ scroll-conservatively 1000)
 
 ;; --> Markdown
 ;; https://www.reddit.com/r/emacs/comments/10h9jf0/beautify_markdown_on_emacs/
+(use-package texfrag)
+
+
 (use-package markdown-mode
   :hook
   (markdown-mode . nb/markdown-unhighlight)
   (markdown-mode . flycheck-mode)
   (markdown-mode . visual-line-mode)
+  (markdown-mode . texfrag-mode)
   :config
   (defvar nb/current-line '(0 . 0)
     "(start . end) of current line in current buffer")
@@ -150,6 +154,10 @@ scroll-conservatively 1000)
 (flycheck-vale-setup)
 (setq-default flycheck-indication-mode 'left-margin)
 (add-hook 'flycheck-mode-hook #'flycheck-set-indication-mode)
+
+
+
+
 
 ;; (straight-use-package
 ;;  '(flymake-vale :type git :host github :repo "tpeacock19/flymake-vale"))
